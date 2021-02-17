@@ -52,7 +52,7 @@
     },
     {
       "type": "ansible-local",
-      "playbook_file": "ansible/amazon_php.yaml",
+      "playbook_file": "ansible/amazon_php_ansible_local.yaml",
       "staging_directory": "/home/{{user `ssh_username`}}/.ansible",
       "extra_arguments": [ "-v" ],
       "role_paths": [

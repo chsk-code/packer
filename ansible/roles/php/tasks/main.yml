@@ -15,5 +15,5 @@
 #      - php-cli
 
 - copy:
-    src: deploy
+    src: packer_deploy
     dest: /home/ubuntu
