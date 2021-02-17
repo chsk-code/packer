@@ -36,6 +36,39 @@
     "run_tags": {
       "Name": "{{user `ami_name`}}"
     },
+    "launch_block_device_mappings": [
+      {
+        "device_name": "/dev/xvda",
+        "volume_size": "{{user `root_volume_size`}}",
+        "volume_type": "gp2",
+        "delete_on_termination": true
+      },
+      {
+        "device_name": "/dev/sdd",
+        "volume_size": "{{user `var_log_volume_size`}}",
+        "volume_type": "gp2",
+        "delete_on_termination": true
+      },
+      {
+        "device_name": "/dev/sde",
+        "volume_size": "{{user `var_log_audit_volume_size`}}",
+        "volume_type": "gp2",
+        "delete_on_termination": true
+      },
+      {
+        "device_name": "/dev/sdf",
+        "volume_size": "{{user `var_tmp_volume_size`}}",
+        "volume_type": "gp2",
+        "delete_on_termination": true
+      },
+      {
+        "device_name": "/dev/sdh",
+        "volume_size": "{{user `run_shm_volume_size`}}",
+        "volume_type": "gp2",
+        "delete_on_termination": true
+      }
+    ]
+  }],
   "provisioners": [
     {
       "type": "shell",

@@ -3,6 +3,7 @@
 
 ### Creating Debian AMI with php configurations - Execute below command
 
+* chmod +x ./init.sh
 * ./init.sh
 * packer build -var-file=vars.json amazon_php_ubuntu.json
 
