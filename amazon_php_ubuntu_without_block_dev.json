@@ -1,0 +1,62 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "vpc_id": "",
+    "subnet_id": "",
+    "aws_region": "",
+    "source_ami": "",
+    "ssh_username": "",
+    "ami_name": "PHP_Ubuntu_{{isotime \"02-Jan-06 03_04_05\"}}",
+    "root_volume_size": "8",
+    "tmp_volume_size": "8",
+    "var_volume_size": "5",
+    "var_log_volume_size": "5",
+    "var_log_audit_volume_size": "5",
+    "var_tmp_volume_size": "5",
+    "home_volume_size": "5",
+    "run_shm_volume_size": "5"
+  },
+  "builders": [{
+    "name": "AWS PHP AMI Ubuntu16 PackerBuilder",
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `aws_region`}}",
+    "instance_type": "t2.micro",
+    "ssh_username": "{{user `ssh_username`}}",
+    "ami_name": "{{user `ami_name` }}",
+    "source_ami": "{{user `source_ami`}}",
+    "ami_description": "Amazon Ubuntu16 Php",
+    "vpc_id": "{{user `vpc_id`}}",
+    "subnet_id": "{{user `subnet_id`}}",
+    "tags": {
+      "Name": "{{user `ami_name`}}"
+    },
+    "run_tags": {
+      "Name": "{{user `ami_name`}}"
+    },
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "scripts/shell_provisioner.sh"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible/amazon_php.yaml",
+      "staging_directory": "/home/{{user `ssh_username`}}/.ansible",
+      "extra_arguments": [ "-v" ],
+      "role_paths": [
+        "ansible/roles/php"
+      ],
+      "playbook_dir": "ansible",
+      "clean_staging_directory": true
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "rm .ssh/authorized_keys ; sudo rm /root/.ssh/authorized_keys"
+      ]
+    }
+  ]
+}
